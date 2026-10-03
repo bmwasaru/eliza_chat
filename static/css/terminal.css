@@ -1,0 +1,292 @@
+:root {
+    --crt-background: #020702;
+    --crt-screen: #071207;
+    --phosphor: #8cff8c;
+    --phosphor-bright: #c1ffc1;
+    --phosphor-dim: #488448;
+    --glow: rgba(125, 255, 125, 0.28);
+    --scanline: rgba(0, 0, 0, 0.20);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    background: #000;
+    color: var(--phosphor);
+    font-family: "Courier New", Courier, monospace;
+    overflow: hidden;
+}
+
+.crt {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    background:
+        radial-gradient(
+            ellipse at center,
+            #0b190b 0%,
+            var(--crt-screen) 55%,
+            var(--crt-background) 100%
+        );
+    overflow: hidden;
+    box-shadow:
+        inset 0 0 100px rgba(0, 0, 0, 0.9);
+}
+
+.crt::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+        repeating-linear-gradient(
+            to bottom,
+            transparent 0,
+            transparent 2px,
+            var(--scanline) 3px,
+            var(--scanline) 4px
+        );
+    z-index: 10;
+}
+
+.crt::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+        radial-gradient(
+            ellipse at center,
+            transparent 50%,
+            rgba(0, 0, 0, 0.72) 100%
+        );
+    z-index: 11;
+}
+
+.terminal {
+    position: relative;
+    z-index: 5;
+    width: 100%;
+    max-width: 1050px;
+    height: 100vh;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    padding: 38px 42px 30px;
+    animation: crt-flicker 7s infinite;
+    text-shadow:
+        0 0 3px var(--glow),
+        0 0 8px rgba(100, 255, 100, 0.12);
+}
+
+.terminal-output {
+    flex: 1;
+    overflow-y: auto;
+    white-space: pre-wrap;
+    font-size: 17px;
+    line-height: 1.55;
+    scrollbar-width: none;
+}
+
+.terminal-output::-webkit-scrollbar {
+    display: none;
+}
+
+.line {
+    min-height: 1.4em;
+    margin: 0;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+
+.system-line {
+    color: var(--phosphor-dim);
+}
+
+.system-important {
+    color: var(--phosphor);
+}
+
+.eliza-line {
+    margin-top: 15px;
+    color: var(--phosphor-bright);
+}
+
+.user-line {
+    margin-top: 15px;
+    color: var(--phosphor);
+}
+
+.error-line {
+    color: var(--phosphor-bright);
+}
+
+.terminal-input {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    flex-shrink: 0;
+    padding-top: 12px;
+}
+
+.prompt {
+    flex-shrink: 0;
+    font-size: 17px;
+    line-height: 1.5;
+    color: var(--phosphor-bright);
+}
+
+#messageInput {
+    flex: 1;
+    min-width: 0;
+    max-height: 130px;
+    overflow-y: auto;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: none;
+    resize: none;
+    background: transparent;
+    color: var(--phosphor-bright);
+    caret-color: transparent;
+    font-family: "Courier New", Courier, monospace;
+    font-size: 17px;
+    line-height: 1.5;
+    text-shadow:
+        0 0 4px var(--glow);
+}
+
+.block-cursor {
+    display: inline-block;
+    width: 10px;
+    height: 19px;
+    margin-top: 3px;
+    background: var(--phosphor-bright);
+    box-shadow:
+        0 0 8px var(--glow);
+    animation:
+        cursor-blink
+        0.9s
+        steps(1)
+        infinite;
+}
+
+.hidden {
+    display: none;
+}
+
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+@keyframes cursor-blink {
+    0%,
+    48% {
+        opacity: 1;
+    }
+
+    49%,
+    100% {
+        opacity: 0;
+    }
+}
+
+@keyframes crt-flicker {
+    0% {
+        opacity: 1;
+    }
+
+    3% {
+        opacity: 0.988;
+    }
+
+    5% {
+        opacity: 1;
+    }
+
+    23% {
+        opacity: 0.996;
+    }
+
+    25% {
+        opacity: 1;
+    }
+
+    76% {
+        opacity: 0.992;
+    }
+
+    78% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@media (max-width: 700px) {
+    .terminal {
+        padding: 24px 18px 20px;
+    }
+
+    .terminal-output,
+    .prompt,
+    #messageInput {
+        font-size: 15px;
+    }
+
+    .block-cursor {
+        width: 9px;
+        height: 17px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .terminal,
+    .block-cursor {
+        animation: none;
+    }
+
+    .block-cursor {
+        opacity: 1;
+    }
+}
+
+
+/* --------------------------------------------------
+   ERROR PAGES
+-------------------------------------------------- */
+
+.terminal-link {
+    color: var(--phosphor-bright);
+    text-decoration: none;
+    border-bottom: 1px dashed var(--phosphor-dim);
+}
+
+.terminal-link:hover,
+.terminal-link:focus {
+    color: var(--phosphor);
+    border-bottom-color: var(--phosphor-bright);
+    outline: none;
+    text-shadow:
+        0 0 6px var(--glow),
+        0 0 12px var(--glow);
+}

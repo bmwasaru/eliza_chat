@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>ELIZA Terminal</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/terminal.css') }}"
+    >
+</head>
+
+<body>
+
+<div class="crt">
+
+    <div class="terminal">
+
+        <main
+            id="terminalOutput"
+            class="terminal-output"
+            aria-live="polite"
+        ></main>
+
+        <form
+            id="chatForm"
+            class="terminal-input hidden"
+            autocomplete="off"
+        >
+
+            <label
+                for="messageInput"
+                class="prompt"
+            >
+                YOU&gt;
+            </label>
+
+            <textarea
+                id="messageInput"
+                rows="1"
+                maxlength="1000"
+                spellcheck="false"
+                autocomplete="off"
+                aria-label="Message to ELIZA"
+            ></textarea>
+
+            <span class="block-cursor"></span>
+
+            <button
+                type="submit"
+                class="visually-hidden"
+            >
+                Send
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+<script
+    src="{{ url_for('static', filename='js/terminal.js') }}"
+></script>
+
+</body>
+</html>

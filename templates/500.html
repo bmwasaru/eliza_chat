@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>500 - Internal Terminal Error</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/terminal.css') }}"
+    >
+</head>
+
+<body>
+
+<div class="crt">
+    <div class="terminal">
+
+        <main class="terminal-output">
+            <div class="line system-important">
+MIT ARTIFICIAL INTELLIGENCE LABORATORY
+            </div>
+
+            <div class="line system-line">
+TERMINAL DIAGNOSTIC MODE
+            </div>
+
+            <div class="line system-line">
+
+            </div>
+
+            <div class="line error-line">
+ERROR 500
+            </div>
+
+            <div class="line system-important">
+INTERNAL SYSTEM FAILURE.
+            </div>
+
+            <div class="line system-line">
+ELIZA ENCOUNTERED AN UNEXPECTED PROCESSING ERROR.
+THE TERMINAL SESSION CANNOT COMPLETE THIS REQUEST.
+            </div>
+
+            <div class="line system-line">
+
+            </div>
+
+            <div class="line system-line">
+TYPE RETURN TO MAIN TERMINAL:
+            </div>
+
+            <div class="line eliza-line">
+<a class="terminal-link" href="{{ url_for('index') }}">ELIZA&gt; RETURN TO SESSION</a>
+            </div>
+        </main>
+
+    </div>
+</div>
+
+</body>
+</html>
